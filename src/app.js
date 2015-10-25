@@ -4,6 +4,7 @@
  * Source: https://github.com/carleson/Gandhi
  *
  * This is a simple quote appliaction with random Mahatma Gandhi quotes.
+ * http://www.brainyquote.com/quotes/authors/m/mahatma_gandhi.html
  */
 
 var UI = require('ui');
@@ -28,14 +29,20 @@ var Quotes = [
   "”Keep your values positive - because your values become your destiny”",
   "”Poverty is the worst form of violence”",
   "”Freedom is not worth having if it does not include the freedom to make mistakes”",
-  "”Truth never damages a cause that is just”"
+  "”Truth never damages a cause that is just”",
+  "”It is health that is real wealth and not pieces of gold and silver”",
+  "”My life is my message”",
+  "”A nation's culture resides in the hearts and in the soul of its people”",
+  "”If I had no sense of humor, I would long ago have committed suicide”",
+  "”In a gentle way, you can shake the world”"
 ];
 var Page = 0;
 
 var main = new UI.Card({
-  title: 'Gandi',
+  title: 'Gandhi',
   icon: 'images/menu_icon.png',
   subtitle: '',
+  scrollable: true,
   body: GetQuotes()
 });
 
