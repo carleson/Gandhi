@@ -1,0 +1,47 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        "configurable"
+    ],
+    "companyName": "Carleson",
+    "longName": "Words of Gandhi",
+    "projectType": "pebblejs",
+    "resources": {
+        "media": [
+            {
+                "file": "images/menu_icon.png",
+                "menuIcon": true,
+                "name": "IMAGE_MENU_ICON",
+                "type": "png"
+            },
+            {
+                "file": "images/logo_splash.png",
+                "name": "IMAGE_LOGO_SPLASH",
+                "type": "png"
+            },
+            {
+                "file": "images/tile_splash.png",
+                "name": "IMAGE_TILE_SPLASH",
+                "type": "png"
+            },
+            {
+                "file": "fonts/UbuntuMono-Regular.ttf",
+                "name": "MONO_FONT_14",
+                "type": "font"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Gandhi",
+    "targetPlatforms": [
+        "aplite",
+        "basalt"
+    ],
+    "uuid": "08ac1c25-fc7a-4b96-bec2-cf6603230df6",
+    "versionCode": 1,
+    "versionLabel": "0.5",
+    "watchapp": {
+        "hiddenApp": false,
+        "watchface": false
+    }
+}
