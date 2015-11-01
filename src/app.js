@@ -5,6 +5,7 @@
  *
  * This is a simple quote appliaction with random Mahatma Gandhi quotes.
  * http://www.brainyquote.com/quotes/authors/m/mahatma_gandhi.html
+ *   icon: 'images/menu_icon.png',
  */
 
 var UI = require('ui');
@@ -37,6 +38,18 @@ var Quotes = [
   "”In a gentle way, you can shake the world”"
 ];
 var Page = 0;
+//var splashScreen = new UI.Card({ banner: 'images/splash.png' });
+//var splashScreen = new UI.Card({ subtitle: 'Words of Gandhi' });
+//splashScreen.show();
+
+var wind = new UI.Window({ fullscreen: true });
+var image = new UI.Image({
+  position: new Vector2(0, 0),
+  size: new Vector2(144, 168),
+  image: 'images/Gandhi.png'
+});
+wind.add(image);
+wind.show();
 
 var main = new UI.Card({
   title: 'Gandhi',
@@ -46,7 +59,14 @@ var main = new UI.Card({
   body: GetQuotes()
 });
 
-main.show();
+setTimeout(function() {
+  // Display the mainScreen
+  main.show();
+  // Hide the splashScreen to avoid showing it when the user press Back.
+  wind.hide();
+}, 3000);
+
+//main.show();
 
 main.on('click', 'select', function(e) {
   main.body(GetQuotes());

@@ -10,7 +10,6 @@
         "media": [
             {
                 "file": "images/menu_icon.png",
-                "menuIcon": true,
                 "name": "IMAGE_MENU_ICON",
                 "type": "png"
             },
@@ -28,6 +27,17 @@
                 "file": "fonts/UbuntuMono-Regular.ttf",
                 "name": "MONO_FONT_14",
                 "type": "font"
+            },
+            {
+                "file": "images/Gandhi28.png",
+                "menuIcon": true,
+                "name": "IMAGES_GANDHI28_PNG",
+                "type": "png"
+            },
+            {
+                "file": "images/Gandhi.png",
+                "name": "IMAGES_GANDHI_PNG",
+                "type": "png"
             }
         ]
     },
@@ -39,7 +49,7 @@
     ],
     "uuid": "08ac1c25-fc7a-4b96-bec2-cf6603230df6",
     "versionCode": 1,
-    "versionLabel": "0.5",
+    "versionLabel": "0.6",
     "watchapp": {
         "hiddenApp": false,
         "watchface": false
