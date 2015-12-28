@@ -1,13 +1,8 @@
 {
+    "appKeys": {},
     "capabilities": [
         "configurable"
     ],
-    "appKeys": {
-    "KEY_COLOR_RED": 0,
-    "KEY_COLOR_GREEN": 1,
-    "KEY_COLOR_BLUE": 2,
-    "KEY_HIGH_CONTRAST": 3
-   },
     "companyName": "Carleson",
     "longName": "Words of Gandhi",
     "projectType": "pebblejs",
@@ -16,17 +11,17 @@
             {
                 "file": "images/menu_icon.png",
                 "name": "IMAGE_MENU_ICON",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/logo_splash.png",
                 "name": "IMAGE_LOGO_SPLASH",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/tile_splash.png",
                 "name": "IMAGE_TILE_SPLASH",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "fonts/UbuntuMono-Regular.ttf",
@@ -37,12 +32,12 @@
                 "file": "images/Gandhi28.png",
                 "menuIcon": true,
                 "name": "IMAGES_GANDHI28_PNG",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/Gandhi.png",
                 "name": "IMAGES_GANDHI_PNG",
-                "type": "png"
+                "type": "bitmap"
             }
         ]
     },
