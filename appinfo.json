@@ -1,5 +1,10 @@
 {
-    "appKeys": {},
+    "appKeys": {
+    "KEY_COLOR_RED": 0,
+    "KEY_COLOR_GREEN": 1,
+    "KEY_COLOR_BLUE": 2,
+    "KEY_HIGH_CONTRAST": 3
+    },
     "capabilities": [
         "configurable"
     ],
@@ -49,7 +54,7 @@
     ],
     "uuid": "08ac1c25-fc7a-4b96-bec2-cf6603230df6",
     "versionCode": 1,
-    "versionLabel": "0.6",
+    "versionLabel": "0.7",
     "watchapp": {
         "hiddenApp": false,
         "watchface": false
