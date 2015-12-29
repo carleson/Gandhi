@@ -8,7 +8,10 @@
  *
  */
 
-/*
+/* Default values */
+var showSplashscreen = false;
+var splashscreenTimer = 0;
+
 Pebble.addEventListener('ready', function() {
   console.log('PebbleKit JS ready!');
 });
@@ -24,9 +27,11 @@ Pebble.addEventListener('webviewclosed', function(e) {
   var configData = JSON.parse(decodeURIComponent(e.response));
   console.log('Configuration page returned: ' + JSON.stringify(configData));
 
-  var backgroundColor = configData['background_color'];
+  showSplashscreen = configData['splashscreen'];
 
   var dict = {};
+  dict['SPLASHSCREEN'] = configData['splashscreen'] ? 1 : 0;
+  
   if(configData['high_contrast'] === true) {
     dict['KEY_HIGH_CONTRAST'] = configData['high_contrast'] ? 1 : 0;  // Send a boolean as an integer
   } else {
@@ -43,7 +48,6 @@ Pebble.addEventListener('webviewclosed', function(e) {
   });
 });
 
-*/
 var UI = require('ui');
 var Vector2 = require('vector2');
 var Accel = require('ui/accel');
@@ -81,8 +85,12 @@ var image = new UI.Image({
   image: 'images/Gandhi.png'
 });
 
-wind.add(image);
-wind.show();
+if (showSplashscreen === true)
+{
+  wind.add(image);
+  wind.show();
+  splashscreenTimer = 2000;
+}
 
 var main = new UI.Card({
   title: 'Gandhi',
@@ -96,10 +104,11 @@ setTimeout(function() {
   // Display the mainScreen
   main.show();
   // Hide the splashScreen to avoid showing it when the user press Back.
-  wind.hide();
-}, 2000);
-
-//main.show();
+  if (showSplashscreen === true)
+  {
+    wind.hide();
+  }
+}, splashscreenTimer);
 
 main.on('click', 'select', function(e) {
   main.body(GetQuotes());
