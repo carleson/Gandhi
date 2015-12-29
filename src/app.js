@@ -8,10 +8,24 @@
  *
  */
 
+// DEBUGGING
+var DEBUG = true;
+var VERSION = 0.8;
+
+// INCLUDES
+var UI = require('ui');
+var Vector2 = require('vector2');
+var Accel = require('ui/accel');
+var Vibe = require('ui/vibe');
+var Settings = require('settings');
+
 /* Default values */
-var showSplashscreen = false;
+var showSplashscreen = true;
 var splashscreenTimer = 0;
 
+// CONFIGURATION
+// WINDOWS
+// EVENT LISTENERS
 Pebble.addEventListener('ready', function() {
   console.log('PebbleKit JS ready!');
 });
@@ -23,14 +37,17 @@ Pebble.addEventListener('showConfiguration', function() {
   Pebble.openURL(url);
 });
 
+// UTILITY FUNCTIONS
+
+
 Pebble.addEventListener('webviewclosed', function(e) {
   var configData = JSON.parse(decodeURIComponent(e.response));
   console.log('Configuration page returned: ' + JSON.stringify(configData));
 
-  showSplashscreen = configData['splashscreen'];
+  //showSplashscreen = configData['splashscreen'];
 
   var dict = {};
-  dict['SPLASHSCREEN'] = configData['splashscreen'] ? 1 : 0;
+  //dict['SPLASHSCREEN'] = configData['splashscreen'] ? 1 : 0;
   
   if(configData['high_contrast'] === true) {
     dict['KEY_HIGH_CONTRAST'] = configData['high_contrast'] ? 1 : 0;  // Send a boolean as an integer
@@ -48,10 +65,6 @@ Pebble.addEventListener('webviewclosed', function(e) {
   });
 });
 
-var UI = require('ui');
-var Vector2 = require('vector2');
-var Accel = require('ui/accel');
-var Vibe = require('ui/vibe');
 var Quotes = [
   "“Be the change you want to see in the world”",
   "“First they ignore you, then they laught at you, then they fight you, then you win”",
@@ -87,6 +100,7 @@ var image = new UI.Image({
 
 if (showSplashscreen === true)
 {
+  if(DEBUG) console.log( "Display SplashScreen..." );
   wind.add(image);
   wind.show();
   splashscreenTimer = 2000;
@@ -136,5 +150,3 @@ function GetRandomPage(){
 
 // Prepare the accelerometer
 Accel.init();
-
-
