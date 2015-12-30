@@ -21,6 +21,7 @@ var Settings = require('settings');
 
 // GLOBAL VARIABLES
 var showSplashscreen = true;
+var shakeSupport = true;
 var splashscreenTimer = 0;
 var Page = 0;
 var Quotes = [
@@ -71,10 +72,21 @@ Pebble.addEventListener('webviewclosed', function(e) {
   console.log('Configuration page returned: ' + JSON.stringify(configData));
 
   //showSplashscreen = configData['splashscreen'];
-
+  
+  Settings.data({
+  name: 'Pebble',
+  splashscreen: configData['splashscreen'],
+  shake: configData['shake'],  
+  });
+  
+  
+  var options = Settings.data();
+  console.log(JSON.stringify(options));
   var dict = {};
   //dict['SPLASHSCREEN'] = configData['splashscreen'] ? 1 : 0;
+  //dict['KEY_HIGH_CONTRAST'] = configData['high_contrast'] ? 1 : 0;  // Send a boolean as an integer
   
+  /*
   if(configData['high_contrast'] === true) {
     dict['KEY_HIGH_CONTRAST'] = configData['high_contrast'] ? 1 : 0;  // Send a boolean as an integer
   } else {
@@ -82,7 +94,7 @@ Pebble.addEventListener('webviewclosed', function(e) {
     dict['KEY_COLOR_GREEN'] = parseInt(backgroundColor.substring(4, 6), 16);
     dict['KEY_COLOR_BLUE'] = parseInt(backgroundColor.substring(6), 16);
   }
-
+*/
   // Send to watchapp
   Pebble.sendAppMessage(dict, function() {
     console.log('Send successful: ' + JSON.stringify(dict));
@@ -90,6 +102,9 @@ Pebble.addEventListener('webviewclosed', function(e) {
     console.log('Send failed!');
   });
 });
+
+showSplashscreen = Settings.data('splashscreen');
+shakeSupport = Settings.data('shake');
 
 var wind = new UI.Window({ fullscreen: true });
 var image = new UI.Image({
@@ -129,8 +144,11 @@ main.on('click', 'select', function(e) {
   });
 
 main.on('accelTap', function(e) {
-   Vibe.vibrate('short');
-   main.body(GetQuotes()); 
+   if (shakeSupport)
+     {
+       Vibe.vibrate('short');
+       main.body(GetQuotes()); 
+     }
   });
 
 function GetQuotes() {
