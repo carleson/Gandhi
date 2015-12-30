@@ -64,43 +64,22 @@ Pebble.addEventListener('showConfiguration', function() {
   Pebble.openURL(url);
 });
 
-// UTILITY FUNCTIONS
-
-
 Pebble.addEventListener('webviewclosed', function(e) {
   var configData = JSON.parse(decodeURIComponent(e.response));
   console.log('Configuration page returned: ' + JSON.stringify(configData));
 
-  //showSplashscreen = configData['splashscreen'];
-  
+  //Save configuration
   Settings.data({
   name: 'Pebble',
   splashscreen: configData['splashscreen'],
   shake: configData['shake'],  
   });
   
-  
-  var options = Settings.data();
-  console.log(JSON.stringify(options));
-  var dict = {};
-  //dict['SPLASHSCREEN'] = configData['splashscreen'] ? 1 : 0;
-  //dict['KEY_HIGH_CONTRAST'] = configData['high_contrast'] ? 1 : 0;  // Send a boolean as an integer
-  
-  /*
-  if(configData['high_contrast'] === true) {
-    dict['KEY_HIGH_CONTRAST'] = configData['high_contrast'] ? 1 : 0;  // Send a boolean as an integer
-  } else {
-    dict['KEY_COLOR_RED'] = parseInt(backgroundColor.substring(2, 4), 16);
-    dict['KEY_COLOR_GREEN'] = parseInt(backgroundColor.substring(4, 6), 16);
-    dict['KEY_COLOR_BLUE'] = parseInt(backgroundColor.substring(6), 16);
-  }
-*/
-  // Send to watchapp
-  Pebble.sendAppMessage(dict, function() {
-    console.log('Send successful: ' + JSON.stringify(dict));
-  }, function() {
-    console.log('Send failed!');
-  });
+  if(DEBUG)
+    {
+      var options = Settings.data();
+      console.log(JSON.stringify(options));       
+    }
 });
 
 showSplashscreen = Settings.data('splashscreen');
@@ -151,6 +130,8 @@ main.on('accelTap', function(e) {
      }
   });
 
+// UTILITY FUNCTIONS
+
 function GetQuotes() {
   return Quotes[GetRandomPage()];
 }
@@ -167,4 +148,4 @@ function GetRandomPage(){
 
 
 // Prepare the accelerometer
-Accel.init();
+if (shakeSupport) Accel.init();
