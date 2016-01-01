@@ -23,8 +23,8 @@ var Settings = require('settings');
 var main;
 var config_background_color = "0xffffff";
 var config_text_color = "#000000"; //#FFFFFF"
-var showSplashscreen = true;
-var shakeSupport = true;
+var config_splashscreen = true;
+var config_shake = true;
 var splashscreenTimer = 0;
 var Page = 0;
 var colorHex;
@@ -41,7 +41,7 @@ var Quotes = [
   "”Happiness is when what you think, what you say and what you do are in harmony”",
   "”Keep your thoughts positive - because your thoughts become your words”",
   "”Keep your words positive - because your words become your behavior”",
-  "”Keep your behavior positive - because you behavior becomes your habits,”",
+  "”Keep your behavior positive - because you behavior becomes your habits”",
   "”Keep your habits positive - because your habits become your values”",
   "”Keep your values positive - because your values become your destiny”",
   "”Poverty is the worst form of violence”",
@@ -54,8 +54,6 @@ var Quotes = [
   "”In a gentle way, you can shake the world”"
 ];
 
-// CONFIGURATION
-// WINDOWS
 // EVENT LISTENERS
 Pebble.addEventListener('ready', function() {
   console.log('PebbleKit JS ready!');
@@ -83,13 +81,14 @@ Pebble.addEventListener('webviewclosed', function(e) {
   if(DEBUG) displayConfig();
 });
 
-//Load configuration
-showSplashscreen = Settings.data('splashscreen');
-shakeSupport = Settings.data('shake');
+// CONFIGURATION
+config_splashscreen = Settings.data('splashscreen');
+config_shake = Settings.data('shake');
 config_background_color = parseColor(Settings.data('background_color'));
 
 if(DEBUG) displayConfig();
 
+// WINDOWS
 var wind = new UI.Window({ fullscreen: true });
 var image = new UI.Image({
   position: new Vector2(0, 0),
@@ -97,7 +96,7 @@ var image = new UI.Image({
   image: 'images/Gandhi.png'
 });
 
-if (showSplashscreen === true)
+if (config_splashscreen === true)
 {
   if(DEBUG) console.log( "Display SplashScreen..." );
   wind.add(image);
@@ -119,7 +118,7 @@ setTimeout(function() {
   // Display the mainScreen
   main.show();
   // Hide the splashScreen to avoid showing it when the user press Back.
-  if (showSplashscreen === true)
+  if (config_splashscreen === true)
   {
     wind.hide();
   }
@@ -130,12 +129,16 @@ main.on('click', 'select', function(e) {
   });
 
 main.on('accelTap', function(e) {
-   if (shakeSupport)
+   if (config_shake)
      {
        Vibe.vibrate('short');
        main.body(GetQuotes()); 
      }
   });
+
+main.on('longSelect', function(e) {
+  if(DEBUG) displayConfig();
+});
 
 // UTILITY FUNCTIONS
 
@@ -156,9 +159,9 @@ function GetRandomPage(){
 
 function parseColor(color) {
   if(DEBUG) console.log( "Method call: parseColor()" );
-  var mycolor = '#' + color.toString().slice(2);
-  if(DEBUG) console.log(mycolor);
-	return mycolor;
+  var fixed_color = '#' + color.toString().slice(2);
+  if(DEBUG) console.log(fixed_color);
+	return fixed_color;
 };
 
 function displayConfig()
@@ -170,14 +173,16 @@ function displayConfig()
   console.log(JSON.stringify(options));       
   console.log(" ");
   console.log("Variables:");
+  console.log("Debug: " + DEBUG);
+  console.log("Version: " + VERSION);
   console.log("config_background_color: " + config_background_color);
   console.log("config_text_color: " + config_text_color);
-  console.log("showSplashscreen: " + showSplashscreen);
-  console.log("shakeSupport: " + shakeSupport);
+  console.log("config_splashscreen: " + config_splashscreen);
+  console.log("config_shake: " + config_shake);
   console.log("splashscreenTimer: " + splashscreenTimer);
   console.log("------------------------------------------");
 };
 
 
 // Prepare the accelerometer
-if (shakeSupport) Accel.init();
+if (config_shake) Accel.init();
