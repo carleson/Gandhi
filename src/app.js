@@ -21,8 +21,10 @@ var Settings = require('settings');
 
 // GLOBAL VARIABLES
 var main;
-var config_background_color = "0xffffff";
-var config_text_color = "#000000"; //#FFFFFF"
+var default_text_color = "#000000";
+var default_background_color = "#ffffff"
+var config_background_color;
+var config_text_color;
 var config_splashscreen = true;
 var config_shake = true;
 var splashscreenTimer = 0;
@@ -76,6 +78,7 @@ Pebble.addEventListener('webviewclosed', function(e) {
   splashscreen: configData['splashscreen'],
   shake: configData['shake'], 
   background_color:   configData['background_color'],
+  text_color:   configData['text_color'],
   });
   
   if(DEBUG) displayConfig();
@@ -84,7 +87,12 @@ Pebble.addEventListener('webviewclosed', function(e) {
 // CONFIGURATION
 config_splashscreen = Settings.data('splashscreen');
 config_shake = Settings.data('shake');
+
 config_background_color = parseColor(Settings.data('background_color'));
+if (config_background_color == '') config_background_color = default_background_color;
+
+config_text_color = parseColor(Settings.data('text_color'));
+if (config_text_color == '') config_text_color = default_text_color;
 
 if(DEBUG) displayConfig();
 
@@ -158,9 +166,14 @@ function GetRandomPage(){
 }
 
 function parseColor(color) {
-  if(DEBUG) console.log( "Method call: parseColor()" );
-  var fixed_color = '#' + color.toString().slice(2);
-  if(DEBUG) console.log(fixed_color);
+  if(DEBUG) console.log("Method call: parseColor()");
+    var fixed_color = '';
+  if (color != 'undefined') && (color != '')
+    {
+      fixed_color = '#' + color.toString().slice(2);
+      if(DEBUG) console.log(fixed_color);      
+    }
+  if(DEBUG) console.log( "Converting color: " + color + "into: " + fixed_color);
 	return fixed_color;
 };
 
@@ -175,6 +188,8 @@ function displayConfig()
   console.log("Variables:");
   console.log("Debug: " + DEBUG);
   console.log("Version: " + VERSION);
+  console.log("default_text_color: " +  default_text_color);
+  console.log("default_background_color: " +  default_background_color);
   console.log("config_background_color: " + config_background_color);
   console.log("config_text_color: " + config_text_color);
   console.log("config_splashscreen: " + config_splashscreen);
