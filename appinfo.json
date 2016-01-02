@@ -4,7 +4,7 @@
         "configurable"
     ],
     "companyName": "Carleson",
-    "longName": "Words of Gandhi",
+    "longName": "Gandhi",
     "projectType": "pebblejs",
     "resources": {
         "media": [
@@ -49,7 +49,7 @@
     ],
     "uuid": "08ac1c25-fc7a-4b96-bec2-cf6603230df6",
     "versionCode": 1,
-    "versionLabel": "0.8",
+    "versionLabel": "0.9",
     "watchapp": {
         "hiddenApp": false,
         "watchface": false

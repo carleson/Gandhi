@@ -10,7 +10,7 @@
 
 // DEBUGGING
 var DEBUG = true;
-var VERSION = 0.8;
+var VERSION = 0.9;
 
 // INCLUDES
 var UI = require('ui');
@@ -70,11 +70,11 @@ Pebble.addEventListener('showConfiguration', function() {
 
 Pebble.addEventListener('webviewclosed', function(e) {
   var configData = JSON.parse(decodeURIComponent(e.response));
-  console.log('Configuration page returned: ' + JSON.stringify(configData));
+  if(DEBUG) console.log('Configuration page returned: ' + JSON.stringify(configData));
 
   //Save configuration
   Settings.data({
-  name: 'Pebble',
+  name: 'Gandhi',
   splashscreen: configData['splashscreen'],
   shake: configData['shake'], 
   background_color:   configData['background_color'],
@@ -82,19 +82,12 @@ Pebble.addEventListener('webviewclosed', function(e) {
   });
   
   if(DEBUG) displayConfig();
+  LoadConfiguration();
+  GetNewCard();
 });
 
 // CONFIGURATION
-config_splashscreen = Settings.data('splashscreen');
-config_shake = Settings.data('shake');
-
-config_background_color = parseColor(Settings.data('background_color'));
-if (config_background_color == '') config_background_color = default_background_color;
-
-config_text_color = parseColor(Settings.data('text_color'));
-if (config_text_color == '') config_text_color = default_text_color;
-
-if(DEBUG) displayConfig();
+LoadConfiguration();
 
 // WINDOWS
 var wind = new UI.Window({ fullscreen: true });
@@ -119,7 +112,7 @@ if (config_splashscreen === true)
   scrollable: true,
   backgroundColor: config_background_color,
   bodyColor: config_text_color,
-  body: GetQuotes()
+  body: GetQuote()
 });
 
 setTimeout(function() {
@@ -133,14 +126,14 @@ setTimeout(function() {
 }, splashscreenTimer);
 
 main.on('click', 'select', function(e) {
-  main.body(GetQuotes());
+  GetNewCard();
   });
 
 main.on('accelTap', function(e) {
    if (config_shake)
      {
        Vibe.vibrate('short');
-       main.body(GetQuotes()); 
+       GetNewCard();
      }
   });
 
@@ -150,12 +143,32 @@ main.on('longSelect', function(e) {
 
 // UTILITY FUNCTIONS
 
-function GetQuotes() {
-  if(DEBUG) console.log( "Method call: GetQuotes()" );
+function LoadConfiguration()
+{
+  if(DEBUG) console.log( "Method call: LoadConfiguration()" );
+  config_splashscreen = Settings.data('splashscreen');
+  config_shake = Settings.data('shake');
+  config_background_color = parseColor(Settings.data('background_color'));
+  if (config_background_color == '') config_background_color = default_background_color
+  
+  config_text_color = parseColor(Settings.data('text_color'));
+  if (config_text_color == '') config_text_color = default_text_color;
+}
+
+function GetNewCard() {
+  if(DEBUG) console.log( "Method call: GetNewCard()" );
+  main.body(GetQuote());
+  main.backgroundColor(config_background_color);
+  main.bodyColor(config_text_color);
+}
+
+function GetQuote() {
+  if(DEBUG) console.log( "Method call: GetQuote()" );
   return Quotes[GetRandomPage()];
 }
 
 function GetRandomPage(){
+    if(DEBUG) console.log( "Method call: GetRandomPage()" );
   var number = 0;
   do {
        number = Math.floor((Math.random() * Quotes.length-1) + 1);
@@ -167,8 +180,9 @@ function GetRandomPage(){
 
 function parseColor(color) {
   if(DEBUG) console.log("Method call: parseColor()");
-    var fixed_color = '';
-  if (color != 'undefined') && (color != '')
+  if(DEBUG) console.log(color); 
+  var fixed_color = '';
+  if (typeof(color) != 'undefined' && color != null)
     {
       fixed_color = '#' + color.toString().slice(2);
       if(DEBUG) console.log(fixed_color);      
